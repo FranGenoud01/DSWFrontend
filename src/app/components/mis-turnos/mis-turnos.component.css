@@ -1,0 +1,20 @@
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-group-item strong {
+  margin-right: auto;
+}
+
+.sugerencias-aside {
+  position: fixed;
+  top: 40%;
+  right: 2%;
+  width: 250px;
+  background-color: #8b8f92;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1)
+}

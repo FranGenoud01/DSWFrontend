@@ -1,0 +1,9 @@
+.left-column,
+.right-column {
+  width: 70%;
+}
+
+.form-floating,
+.form-select {
+  width: 100%;
+}

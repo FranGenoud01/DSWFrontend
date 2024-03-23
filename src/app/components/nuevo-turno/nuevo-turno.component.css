@@ -1,0 +1,26 @@
+.wrapper{
+  height: 78%;
+}
+
+.form-floating,
+.form-select {
+  width: 100%;
+}
+
+.col{
+  padding-top: 1rem;
+}
+
+select{
+  height: 150%;
+}
+
+.form-select {
+  padding: 1rem 3rem;
+  font-size: 1.2rem;
+  height: auto;
+  line-height: 1.8;
+  min-width: 100%;
+  width: 100%;
+}
+

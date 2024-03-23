@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+<div class="wrapper">
+  <h2 class="welcome-message">¡Bienvenido a la sección de Mis turnos!</h2>
+  <figure class="text-center">
+  <p class="lead">Aquí podes ver todos tus turnos programados en nuestro hospital. <br>
+  Si aún no tenes ninguno, no te preocupes, podes programar uno fácilmente desde la sección Nuevo Turno</p>
+  </figure>
+  <h4>Tus turnos son los siguientes:</h4>
+  <div *ngIf="proximosTurnos.length > 0; else noTurnos" class="list-group">
+    <div *ngFor="let turno of proximosTurnos" class="list-group">
+      <div class="list-group-item mb-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>
+              Fecha: {{ turno.dateShift }} <br>
+              Hora: {{ turno.hourShift }}hs. <br>
+              Dr/Dra: {{ turno.doctorSurname }}, {{ turno.doctorName }} <br>
+              Especialidad: {{ turno.speciality }}</strong>
+          </div>
+          <div>
+            <button class="btn btn-danger" (click)="cancelarTurno(turno.id)">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <ng-template #noTurnos>
+    <div class="alert alert-warning">
+      <strong>No tienes ninguna consulta agendada.</strong>
+    </div>
+  </ng-template>
+  <div class="list-categories">
+    <p class="lead">
+      Sugerencias útiles: <br>
+        - Llega al hospital con 15 minutos de anticipación para registrarte <br>
+        - No olvides llevar contigo tu documento de identidad y tu obra social <br>
+    </p>
+  </div>
+</div>
+<app-footer></app-footer>

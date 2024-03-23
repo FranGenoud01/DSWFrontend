@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<div class="wrapper">
+  <div class="row g-3">
+    <div class="col">
+      <div class="form-floating mb-3">
+        <select class="form-select mb-3" id="speciality" [(ngModel)]="selectedEspecialidad"
+          placeholder="Ingrese su obra social" (change)="onEspecialidadSelected()">
+          <option value="" disabled selected>Elija una</option>
+          <option *ngFor="let especialidad of specialities" [value]="especialidad.id">{{ especialidad.description }}</option>
+        </select>
+        <label for="speciality">Especialidad</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating mb-3">
+        <select class="form-select form-select-lg" id="profesional" name="profesional" [(ngModel)]="selectedProfesional"
+          placeholder="Elija  un profesional">
+          <option value="" disabled selected>Elija uno</option>
+          <option *ngFor="let profesional of professionals" [value]="profesional.id">{{ profesional.name }} {{
+            profesional.surname }}</option>
+        </select>
+        <label for="profesional">Profesional</label>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

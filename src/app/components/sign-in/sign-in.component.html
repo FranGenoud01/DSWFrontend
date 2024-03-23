@@ -1,0 +1,93 @@
+<div class="wrapper">
+  <img class="logo" src="../../../assets/img/login.png" alt="img login">
+  <h3>Registrar Usuario</h3>
+  <div class="left-column">
+    <div class="row g-3">
+      <div class="col">
+        <div class="form-floating mb-3">
+        <input type="string" [(ngModel)]="DNI" class="form-control" placeholder="Ingrese su DNI">
+        <label>DNI</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="name" class="form-control" placeholder="Ingrese su nombre">
+          <label>Nombre</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="surname" class="form-control" placeholder="Ingrese su apellido">
+          <label>Apellido</label>
+        </div>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="age" class="form-control" placeholder="Ingrese su edad">
+          <label>Edad</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="date" [(ngModel)]="birthdate" class="form-control" placeholder="Ingrese su fecha de nacimiento">
+          <label>Fecha de nacimiento</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="adress" class="form-control" placeholder="Ingrese su direccion">
+          <label>Dirección</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" [(ngModel)]="phoneNumber" class="form-control" placeholder="Ingrese su telefono">
+          <label>Teléfono</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-column">
+    <div class="row g-3">
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="email" [(ngModel)]="email" class="form-control" placeholder="Ingrese su email">
+          <label>Email</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <select class="form-select" id="healthInsurance" [(ngModel)]="healthInsurance"
+            placeholder="Ingrese su obra social" (change)="onHealthInsuranceSelected()">
+            <option value="" disabled selected>Elija una</option>
+            <option *ngFor="let obraSocial of obrasSociales" [value]="obraSocial.id">{{ obraSocial.description }}
+            </option>
+          </select>
+          <label for="healthInsurance">Obra Social</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="string" [(ngModel)]="sex" class="form-control" placeholder="Ingrese su sexo">
+          <label>Sexo</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" [(ngModel)]="password" class="form-control" placeholder="Ingrese su password">
+      <label>Password</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" [(ngModel)]="confirmPassword" class="form-control" placeholder="Repita su password"
+        (keyup.enter)="addPatient()">
+      <label>Repetir password</label>
+    </div>
+    <div class="d-flex btn-group gap-1">
+      <button type="button" (click)="addPatient()" class="btn btn-primary btn-lg">Aceptar</button>
+      <button type="button" (click)="navigateToLogin()" class="btn btn-secondary btn-lg">Volver</button>
+    </div>
+
+  </div>
+</div>

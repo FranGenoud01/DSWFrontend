@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+<div class="wrapper">
+  <h2 class="welcome-message">Hola,  <span>{{ nombre }}</span>&nbsp;<span>{{ apellido }}</span></h2>
+  <div *ngIf="proximoTurno" class="alert alert-info" role="alert">
+    <strong>Tu próximo turno es <br> 
+      Fecha: {{ proximoTurno.dateShift }} <br>
+      Hora: {{ proximoTurno.hourShift }}hs. <br> 
+      Dr/Dra: {{proximoTurno.doctorSurname}}, {{proximoTurno.doctorName}} <br>
+      Especialidad: {{proximoTurno.speciality}}</strong>
+  </div>
+  <div *ngIf="!proximoTurno" class="alert alert-warning">
+    <strong>No tienes ninguna consulta agendada.</strong>
+  </div>
+</div>
+<app-footer></app-footer>
