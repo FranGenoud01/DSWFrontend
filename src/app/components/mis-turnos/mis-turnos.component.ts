@@ -1,91 +1,100 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Shift } from 'src/app/interfaces/shift';
-import { TurnoService } from 'src/app/services/shift.service';
+import { ErrorService } from 'src/app/services/error.service';
+import { ShiftService } from 'src/app/services/shift.service';
 
 @Component({
-  selector: 'app-mis-turnos',
+  selector: 'app-mis-shifts',
   templateUrl: './mis-turnos.component.html',
   styleUrls: ['./mis-turnos.component.css'],
 })
 export class MisTurnosComponent implements OnInit {
-  nombre: string = '';
-  apellido: string = '';
+  name: string = '';
+  surname: string = '';
   document: string = '';
-  proximosTurnos: Shift[] = [];
-  constructor(private turnoService: TurnoService) {}
+  nextShifts: Shift[] = [];
+  constructor(
+    private turnoService: ShiftService,
+    private _errorService: ErrorService
+  ) {}
 
   ngOnInit() {
     const currentUser = localStorage.getItem('currentUser');
     if (currentUser) {
       const user = JSON.parse(currentUser);
-      this.nombre = user.nombre;
-      this.apellido = user.apellido;
+      this.name = user.name;
+      this.surname = user.surname;
       this.document = user.document;
-      this.obtenerTodosLosTurnos(this.document);
+      this.getAllShifts(this.document);
     }
   }
 
-  obtenerTodosLosTurnos(dni: string) {
-    this.turnoService.getTurnosByDNI(dni).subscribe((turnos) => {
-      if (turnos && turnos.data && turnos.data.length > 0) {
-        this.proximosTurnos = turnos.data
-          .map((turno: Shift) => {
-            const parts = turno.dateShift.split('-');
+  getAllShifts(dni: string) {
+    this.turnoService.getTurnosByDNI(dni).subscribe((shifts) => {
+      if (shifts && shifts.data && shifts.data.length > 0) {
+        this.nextShifts = shifts.data
+          .map((shift: Shift) => {
+            const parts = shift.dateShift.split('-');
             const year = parseInt(parts[0]);
             const month = parseInt(parts[1]) - 1;
             const day = parseInt(parts[2]);
-            const fechaTurno = new Date(year, month, day);
-            if (!isNaN(fechaTurno.getTime())) {
-              const dia = fechaTurno.getDate();
-              const mes = fechaTurno.getMonth() + 1;
-              const anio = fechaTurno.getFullYear();
-              const fechaFormateada = `${dia < 10 ? '0' : ''}${dia}/${
+            const dateShift = new Date(year, month, day);
+            if (!isNaN(dateShift.getTime())) {
+              const dia = dateShift.getDate();
+              const mes = dateShift.getMonth() + 1;
+              const anio = dateShift.getFullYear();
+              const dateFormatted = `${dia < 10 ? '0' : ''}${dia}/${
                 mes < 10 ? '0' : ''
               }${mes}/${anio}`;
               return {
-                ...turno,
-                dateShift: fechaFormateada,
+                ...shift,
+                dateShift: dateFormatted,
               } as Shift;
             } else {
               return null;
             }
           })
-          .filter((turno: Shift) => turno !== null);
-        this.obtenerInformacionDoctores(this.proximosTurnos);
-        console.log(this.proximosTurnos);
+          .filter((shift: Shift) => shift !== null);
+        this.getInformationProfessionals(this.nextShifts);
       } else {
-        this.proximosTurnos = [];
+        this.nextShifts = [];
       }
     });
   }
 
-  obtenerInformacionDoctores(turnos: Shift[]): void {
-    turnos.forEach((turno) => {
-      this.obtenerInformacionDoctor(turno.licenseProfessional).subscribe(
+  getInformationProfessionals(shifts: Shift[]): void {
+    shifts.forEach((shift) => {
+      this.getInformationProfessional(shift.licenseProfessional).subscribe(
         (doctor) => {
-          turno.doctorName = doctor.data.name;
-          turno.doctorSurname = doctor.data.surname;
-          turno.speciality = doctor.data.speciality.description;
+          shift.doctorName = doctor.data.name;
+          shift.doctorSurname = doctor.data.surname;
+          shift.speciality = doctor.data.speciality.description;
         }
       );
     });
   }
 
-  obtenerInformacionDoctor(licenseNumber: string): Observable<any> {
+  getInformationProfessional(licenseNumber: string): Observable<any> {
     return this.turnoService.getDoctorByLicenseNumber(licenseNumber);
   }
 
-  cancelarTurno(idTurno: number) {
-    this.turnoService.cancelarTurno(idTurno).subscribe(
-      () => {
-        this.proximosTurnos = this.proximosTurnos.filter(
-          (turno) => turno.id !== idTurno
-        );
-      },
-      (error: any) => {
-        console.error('Error al cancelar el turno:', error);
-      }
+  cancelShift(idTurno: number) {
+    const confirmation = window.confirm(
+      '¿Está seguro de que desea cancelar este turno?'
     );
+    if (confirmation) {
+      this.turnoService.cancelShift(idTurno).subscribe(
+        () => {
+          this.nextShifts = this.nextShifts.filter(
+            (shift) => shift.id !== idTurno
+          );
+        },
+        (e: HttpErrorResponse) => {
+          this._errorService.msjError(e);
+        }
+      );
+    }
   }
 }

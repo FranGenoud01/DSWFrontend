@@ -6,14 +6,14 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class SpecialitieServiceService {
+export class SpecialityServiceService {
   private myAppUrl: string;
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
   }
 
-  getEspecialidades(): Observable<any[]> {
+  getSpecialities(): Observable<any[]> {
     const tokenData: string = localStorage.getItem('token') || ''; // Obtener el token como una cadena JSON
     const tokenObj = JSON.parse(tokenData); // Convertir la cadena JSON a un objeto JavaScript
     const accessToken = tokenObj.token.accessToken; // Acceder al accessToken dentro del objeto token

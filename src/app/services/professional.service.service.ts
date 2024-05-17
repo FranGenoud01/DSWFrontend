@@ -13,7 +13,7 @@ export class ProfessionalService {
     this.myAppUrl = environment.endpoint;
   }
 
-  getProfesionalesPorEspecialidad(especialidadId: number): Observable<any[]> {
+  getProfessionalsBySpeciality(specialityId: number): Observable<any[]> {
     const tokenData: string = localStorage.getItem('token') || ''; // Obtener el token como una cadena JSON
     const tokenObj = JSON.parse(tokenData); // Convertir la cadena JSON a un objeto JavaScript
     const accessToken = tokenObj.token.accessToken; // Acceder al accessToken dentro del objeto token
@@ -22,11 +22,63 @@ export class ProfessionalService {
       'Authorization',
       `Bearer ${accessToken}`
     );
-    console.log(
-      `${this.myAppUrl}professional/?especialidad=${especialidadId}/speciality`
+    return this.http.get<any[]>(
+      `${this.myAppUrl}professional/${specialityId}/speciality`,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  getProfessionalsByHealthInsurance(
+    healthInsuranceId: number
+  ): Observable<any[]> {
+    const tokenData: string = localStorage.getItem('token') || ''; // Obtener el token como una cadena JSON
+    const tokenObj = JSON.parse(tokenData); // Convertir la cadena JSON a un objeto JavaScript
+    const accessToken = tokenObj.token.accessToken; // Acceder al accessToken dentro del objeto token
+
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${accessToken}`
     );
     return this.http.get<any[]>(
-      `${this.myAppUrl}professional/${especialidadId}/speciality`,
+      `${this.myAppUrl}professional/${healthInsuranceId}/healthInsurance`,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  getAvailableShiftsByProf(licenseNumber: string): Observable<any[]> {
+    const tokenData: string = localStorage.getItem('token') || ''; // Obtener el token como una cadena JSON
+    const tokenObj = JSON.parse(tokenData); // Convertir la cadena JSON a un objeto JavaScript
+    const accessToken = tokenObj.token.accessToken; // Acceder al accessToken dentro del objeto token
+
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${accessToken}`
+    );
+    return this.http.get<any[]>(
+      `${this.myAppUrl}shift/${licenseNumber}/professional`,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  getAvailableShiftsByDate(
+    date: string,
+    licenseNumber: string
+  ): Observable<any[]> {
+    const tokenData: string = localStorage.getItem('token') || ''; // Obtener el token como una cadena JSON
+    const tokenObj = JSON.parse(tokenData); // Convertir la cadena JSON a un objeto JavaScript
+    const accessToken = tokenObj.token.accessToken; // Acceder al accessToken dentro del objeto token
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${accessToken}`
+    );
+    return this.http.get<any[]>(
+      `${this.myAppUrl}shift/${licenseNumber}/professional/${date}/free`,
       {
         headers: headers,
       }

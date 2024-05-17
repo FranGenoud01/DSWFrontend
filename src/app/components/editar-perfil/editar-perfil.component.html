@@ -1,0 +1,89 @@
+<app-navbar></app-navbar>
+<div class="wrapper">
+  <h2 class="welcome-message">Edita tus datos personales</h2>
+  <div class="left-column">
+    <div class="row g-3">
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="user.name" class="form-control" placeholder="Ingrese su nombre"
+            [ngClass]="{ 'is-invalid': user.name && user.name.length > 20 }">
+          <label>Nombre</label>
+          <div class="invalid-feedback">El nombre no puede exceder los 20 caracteres.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="user.surname" class="form-control" placeholder="Ingrese su apellido"
+            [ngClass]="{ 'is-invalid': user.surname && user.surname.length > 20 }">
+          <label>Apellido</label>
+          <div class="invalid-feedback">El apellido no puede exceder los 20 caracteres.</div>
+        </div>  
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="user.adress" class="form-control" placeholder="Ingrese su nueva direccion">
+          <label>Dirección</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="user.phoneNumber" class="form-control" placeholder="Ingrese su telefono"
+            [ngClass]="{ 'is-invalid': user.phoneNumber && (!isNumeric(user.phoneNumber) || user.phoneNumber.length > 15) }">
+          <label>Teléfono</label>
+          <div class="invalid-feedback">
+            <span *ngIf="!isNumeric(user.phoneNumber)">El teléfono debe ser numérico.</span>
+            <span *ngIf="user.phoneNumber && user.phoneNumber.length > 15">El teléfono debe tener máximo 15 números.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-column">
+    <div class="row g-3">
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="email" [(ngModel)]="user.email" class="form-control" placeholder="Ingrese su email"
+            [ngClass]="{ 'is-invalid': user.email && !isEmailValid(user.email) }">
+          <label>Email</label>
+          <div class="invalid-feedback">
+            <span *ngIf="user.email && !isEmailValid(user.email)">Ingrese un email válido.</span>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <select class="form-select" id="healthInsurance" [(ngModel)]="user.healthInsurance"
+            placeholder="Ingrese su obra social" (change)="onHealthInsuranceSelected()">
+            <option value="" disabled selected>Elija una opción</option>
+            <option value="null">PARTICULAR</option>
+            <option *ngFor="let healthInsurance of healthInsurances" [value]="healthInsurance.id">{{ healthInsurance.description }}
+            </option>
+          </select>
+          <label for="healthInsurance">Obra Social</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="string" [(ngModel)]="user.sex" class="form-control" placeholder="Ingrese su sexo">
+          <label>Sexo</label>
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" [(ngModel)]="password" class="form-control" placeholder="Ingrese su password"
+          [ngClass]="{ 'is-invalid': password && password.length < 6 }">
+        <label>Password</label>
+        <div class="invalid-feedback">La contraseña debe tener mínimo 6 caracteres.</div>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" [(ngModel)]="confirmPassword" class="form-control" placeholder="Repita su password"
+          (keyup.enter)="updatePatient()" [ngClass]="{ 'is-invalid': confirmPassword && confirmPassword.length < 6 }">
+        <label>Repetir password</label>
+        <div class="invalid-feedback">La contraseña debe tener mínimo 6 caracteres.</div>
+      </div>
+      <div class="d-flex btn-group gap-1">
+        <button type="button" (click)="updatePatient()" class="btn btn-primary btn-lg">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

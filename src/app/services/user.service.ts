@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -41,5 +41,33 @@ export class UserService {
       `${this.myAppUrl}${this.authApiUrl}/login`,
       user
     );
+  }
+
+  getPatient(dni: string): Observable<any> {
+    const tokenData: string = localStorage.getItem('token') || ''; // Obtener el token como una cadena JSON
+    const tokenObj = JSON.parse(tokenData); // Convertir la cadena JSON a un objeto JavaScript
+    const accessToken = tokenObj.token.accessToken; // Acceder al accessToken dentro del objeto token
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${accessToken}`
+    );
+
+    return this.http.get(`${this.myAppUrl}${this.myApiUrl}${dni}`, {
+      headers: headers,
+    });
+  }
+
+  updatePatient(user: any): Observable<any> {
+    const tokenData: string = localStorage.getItem('token') || ''; // Obtener el token como una cadena JSON
+    const tokenObj = JSON.parse(tokenData); // Convertir la cadena JSON a un objeto JavaScript
+    const accessToken = tokenObj.token.accessToken; // Acceder al accessToken dentro del objeto token
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${accessToken}`
+    );
+
+    return this.http.put(`${this.myAppUrl}${this.myApiUrl}${user.DNI}`, user, {
+      headers: headers,
+    });
   }
 }

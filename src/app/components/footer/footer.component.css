@@ -1,4 +1,10 @@
 .colorFooter{
-  background-color: #7c7c7c;
+  background-color: #1d2780;
   color: white;
+}
+
+footer {
+  position: relative;
+  width: 100%;
+  bottom: 0;
 }

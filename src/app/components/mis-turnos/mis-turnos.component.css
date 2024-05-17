@@ -1,3 +1,8 @@
+.wrapper {
+  height: 78%;
+  overflow: auto;
+}
+
 .list-group-item {
   display: flex;
   justify-content: space-between;

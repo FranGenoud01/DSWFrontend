@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class TurnoService {
+export class ShiftService {
   private myAppUrl: string;
 
   constructor(private http: HttpClient) {
@@ -21,7 +21,7 @@ export class TurnoService {
     return this.http.get<any>(`${this.myAppUrl}professional/${licenseNumber}`);
   }
 
-  cancelarTurno(shiftId: number): Observable<any> {
+  cancelShift(shiftId: number): Observable<any> {
     const tokenData: string = localStorage.getItem('token') || ''; // Obtener el token como una cadena JSON
     const tokenObj = JSON.parse(tokenData); // Convertir la cadena JSON a un objeto JavaScript
     const accessToken = tokenObj.token.accessToken; // Acceder al accessToken dentro del objeto token
@@ -35,5 +35,19 @@ export class TurnoService {
       {},
       { headers: headers }
     );
+  }
+
+  saveShift(shiftId: number, dni: string, price: number): Observable<any> {
+    const tokenData: string = localStorage.getItem('token') || ''; // Obtener el token como una cadena JSON
+    const tokenObj = JSON.parse(tokenData); // Convertir la cadena JSON a un objeto JavaScript
+    const accessToken = tokenObj.token.accessToken; // Acceder al accessToken dentro del objeto token}
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${accessToken}`
+    );
+    const body = { price: price };
+    return this.http.put<any>(`${this.myAppUrl}shift/${shiftId}/${dni}`, body, {
+      headers: headers,
+    });
   }
 }

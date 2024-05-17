@@ -4,23 +4,17 @@
 
 .form-floating,
 .form-select {
-  width: 100%;
+  width: max-content;
 }
 
 .col{
-  padding-top: 1rem;
-}
-
-select{
-  height: 150%;
+  padding: 1rem;
 }
 
 .form-select {
-  padding: 1rem 3rem;
-  font-size: 1.2rem;
-  height: auto;
-  line-height: 1.8;
-  min-width: 100%;
-  width: 100%;
+  width: 150px;
+  overflow: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 

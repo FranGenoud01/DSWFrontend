@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
       password: this.password,
       name: '',
       surname: '',
-      age: '',
       birthdate: '',
       adress: '',
       phoneNumber: '',
@@ -45,18 +44,15 @@ export class LoginComponent implements OnInit {
 
     this._userService.login(user).subscribe({
       next: (token) => {
-        console.log(token);
         localStorage.setItem('token', JSON.stringify(token));
         const payload = this.decodeJWT(token);
-        console.log(payload);
-        const nombre = payload.name;
-        const apellido = payload.surname;
+        const name = payload.name;
+        const surname = payload.surname;
         const document = payload.DNI;
-        console.log(nombre, apellido, document);
-        this._userService.setUser({ nombre, apellido, document });
+        this._userService.setUser({ name, surname, document });
         localStorage.setItem(
           'currentUser',
-          JSON.stringify({ nombre, apellido, document })
+          JSON.stringify({ name, surname, document })
         );
         this.router.navigate(['/home']);
       },

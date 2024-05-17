@@ -1,15 +1,18 @@
 <app-navbar></app-navbar>
 <div class="wrapper">
-  <h2 class="welcome-message">Hola,  <span>{{ nombre }}</span>&nbsp;<span>{{ apellido }}</span></h2>
-  <div *ngIf="proximoTurno" class="alert alert-info" role="alert">
+  <h2 class="welcome-message">Hola,  <span>{{ name }}</span>&nbsp;<span>{{ surname }}</span></h2>
+  <div *ngIf="nextShif" class="alert alert-info" role="alert">
     <strong>Tu próximo turno es <br> 
-      Fecha: {{ proximoTurno.dateShift }} <br>
-      Hora: {{ proximoTurno.hourShift }}hs. <br> 
-      Dr/Dra: {{proximoTurno.doctorSurname}}, {{proximoTurno.doctorName}} <br>
-      Especialidad: {{proximoTurno.speciality}}</strong>
+      Fecha: {{ nextShif.dateShift }} <br>
+      Hora: {{ nextShif.hourShift }}hs. <br> 
+      Dr/Dra: {{nextShif.doctorSurname}}, {{nextShif.doctorName}} <br>
+      Especialidad: {{nextShif.speciality}} <br>
+      <span *ngIf="nextShif.price > 0">Precio: ${{ nextShif.price }}</span>
+    </strong>
   </div>
-  <div *ngIf="!proximoTurno" class="alert alert-warning">
-    <strong>No tienes ninguna consulta agendada.</strong>
+  <div *ngIf="!nextShif" class="alert alert-info">
+    <strong>No tienes ninguna consulta agendada.<br>
+    No olvides que podes conseguir una en la sección Nuevo Turno</strong>
   </div>
 </div>
 <app-footer></app-footer>

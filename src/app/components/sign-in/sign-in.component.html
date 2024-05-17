@@ -5,30 +5,33 @@
     <div class="row g-3">
       <div class="col">
         <div class="form-floating mb-3">
-        <input type="string" [(ngModel)]="DNI" class="form-control" placeholder="Ingrese su DNI">
-        <label>DNI</label>
+          <input type="text" [(ngModel)]="DNI" class="form-control" placeholder="Ingrese su DNI"
+            [ngClass]="{ 'is-invalid': DNI && (!isNumeric(DNI) || DNI.length < 7 || DNI.length > 8) }">
+          <label>DNI</label>
+          <div class="invalid-feedback">
+            <span *ngIf="!isNumeric(DNI)">El DNI debe ser numérico.</span>
+            <span *ngIf="DNI && (DNI.length < 7 || DNI.length > 8)"> El DNI debe tener entre 7 y 8 dígitos.</span>
+          </div>
         </div>
       </div>
       <div class="col">
         <div class="form-floating mb-3">
-          <input type="text" [(ngModel)]="name" class="form-control" placeholder="Ingrese su nombre">
+          <input type="text" [(ngModel)]="name" class="form-control" placeholder="Ingrese su nombre"
+            [ngClass]="{ 'is-invalid': name && name.length > 20 }">
           <label>Nombre</label>
+          <div class="invalid-feedback">El nombre no puede exceder los 20 caracteres.</div>
         </div>
       </div>
       <div class="col">
         <div class="form-floating mb-3">
-          <input type="text" [(ngModel)]="surname" class="form-control" placeholder="Ingrese su apellido">
+          <input type="text" [(ngModel)]="surname" class="form-control" placeholder="Ingrese su apellido"
+            [ngClass]="{ 'is-invalid': surname && surname.length > 20 }">
           <label>Apellido</label>
+          <div class="invalid-feedback">El apellido no puede exceder los 20 caracteres.</div>
         </div>
       </div>
     </div>
     <div class="row g-3">
-      <div class="col">
-        <div class="form-floating mb-3">
-          <input type="text" [(ngModel)]="age" class="form-control" placeholder="Ingrese su edad">
-          <label>Edad</label>
-        </div>
-      </div>
       <div class="col">
         <div class="form-floating mb-3">
           <input type="date" [(ngModel)]="birthdate" class="form-control" placeholder="Ingrese su fecha de nacimiento">
@@ -42,9 +45,14 @@
         </div>
       </div>
       <div class="col">
-        <div class="form-floating">
-          <input type="text" [(ngModel)]="phoneNumber" class="form-control" placeholder="Ingrese su telefono">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="phoneNumber" class="form-control" placeholder="Ingrese su telefono"
+            [ngClass]="{ 'is-invalid': phoneNumber && (!isNumeric(phoneNumber) || phoneNumber.length > 15) }">
           <label>Teléfono</label>
+          <div class="invalid-feedback">
+            <span *ngIf="!isNumeric(phoneNumber)">El teléfono debe ser numérico.</span>
+            <span *ngIf="phoneNumber && phoneNumber.length > 15">El teléfono debe tener máximo 15 caracteres.</span>
+          </div>
         </div>
       </div>
     </div>
@@ -53,17 +61,21 @@
     <div class="row g-3">
       <div class="col">
         <div class="form-floating mb-3">
-          <input type="email" [(ngModel)]="email" class="form-control" placeholder="Ingrese su email">
+          <input type="email" [(ngModel)]="email" class="form-control" placeholder="Ingrese su email"
+            [ngClass]="{ 'is-invalid': email && !isEmailValid(email) }">
           <label>Email</label>
+          <div class="invalid-feedback">
+            <span *ngIf="email && !isEmailValid(email)">Ingrese un email válido.</span>
+          </div>
         </div>
       </div>
       <div class="col">
         <div class="form-floating mb-3">
-          <select class="form-select" id="healthInsurance" [(ngModel)]="healthInsurance"
-            placeholder="Ingrese su obra social" (change)="onHealthInsuranceSelected()">
+          <select class="form-select" id="healthInsurance" [(ngModel)]="healthInsurance" placeholder="Ingrese su obra social"
+            (change)="onHealthInsuranceSelected()">
             <option value="" disabled selected>Elija una</option>
-            <option *ngFor="let obraSocial of obrasSociales" [value]="obraSocial.id">{{ obraSocial.description }}
-            </option>
+            <option value="null">PARTICULAR</option>
+            <option *ngFor="let obraSocial of healthInsurances" [value]="obraSocial.id">{{ obraSocial.description }}</option>
           </select>
           <label for="healthInsurance">Obra Social</label>
         </div>
@@ -76,13 +88,16 @@
       </div>
     </div>
     <div class="form-floating mb-3">
-      <input type="password" [(ngModel)]="password" class="form-control" placeholder="Ingrese su password">
+      <input type="password" [(ngModel)]="password" class="form-control" placeholder="Ingrese su password"
+        [ngClass]="{ 'is-invalid': password && password.length < 6 }">
       <label>Password</label>
+      <div class="invalid-feedback">La contraseña debe tener mínimo 6 caracteres.</div>
     </div>
     <div class="form-floating mb-3">
       <input type="password" [(ngModel)]="confirmPassword" class="form-control" placeholder="Repita su password"
-        (keyup.enter)="addPatient()">
+        (keyup.enter)="addPatient()" [ngClass]="{ 'is-invalid': password && password.length < 6 }">
       <label>Repetir password</label>
+      <div class="invalid-feedback">La contraseña debe tener mínimo 6 caracteres.</div>
     </div>
     <div class="d-flex btn-group gap-1">
       <button type="button" (click)="addPatient()" class="btn btn-primary btn-lg">Aceptar</button>

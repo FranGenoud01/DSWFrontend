@@ -1,26 +1,77 @@
 <app-navbar></app-navbar>
 <div class="wrapper">
+  <h2 class="welcome-message">Encontrá tu turno</h2>
   <div class="row g-3">
     <div class="col">
       <div class="form-floating mb-3">
-        <select class="form-select mb-3" id="speciality" [(ngModel)]="selectedEspecialidad"
-          placeholder="Ingrese su obra social" (change)="onEspecialidadSelected()">
+        <select class="form-select" id="speciality" [(ngModel)]="selectedSpeciality" placeholder="Ingrese su especialidad"
+          (change)="onSpecialitySelected()">
           <option value="" disabled selected>Elija una</option>
-          <option *ngFor="let especialidad of specialities" [value]="especialidad.id">{{ especialidad.description }}</option>
+          <option *ngFor="let speciality of specialities" [value]="speciality.id">{{ speciality.description }}</option>
         </select>
         <label for="speciality">Especialidad</label>
       </div>
     </div>
     <div class="col">
       <div class="form-floating mb-3">
-        <select class="form-select form-select-lg" id="profesional" name="profesional" [(ngModel)]="selectedProfesional"
-          placeholder="Elija  un profesional">
-          <option value="" disabled selected>Elija uno</option>
-          <option *ngFor="let profesional of professionals" [value]="profesional.id">{{ profesional.name }} {{
-            profesional.surname }}</option>
+        <select class="form-select" id="insuranceType" [(ngModel)]="selectedInsuranceType"
+          (change)="onHealthInsuranceTypeSelected()">
+          <option value="" disabled selected>Elija una opción</option>
+          <option value="with">Con obra social</option>
+          <option value="without">Sin obra social</option>
         </select>
-        <label for="profesional">Profesional</label>
+        <label for="insuranceType">¿Tiene obra social?</label>
       </div>
+    </div>
+    <div class="col" *ngIf="selectedInsuranceType !== 'without'">
+      <div class="form-floating mb-3">
+        <select class="form-select" id="healthInsurance" [(ngModel)]="selectedHealthInsurance"
+          placeholder="Ingrese su obra social" (change)="onHealthInsuranceSelected()">
+          <option value="" disabled selected>Elija una</option>
+          <option *ngFor="let healthInsurance of healthInsurances" [value]="healthInsurance.id">{{
+            healthInsurance.description }}</option>
+        </select>
+        <label for="speciality">Obra Social</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating mb-3">
+        <select class="form-select" id="professional" [(ngModel)]="selectedProfessional" placeholder="Elija un profesional"
+          (change)="onProfessionalSelected()">
+          <option value="" disabled selected>Elija uno</option>
+          <ng-container *ngFor="let professional of professionals">
+            <option *ngIf="selectedInsuranceType === 'without'" [value]="professional.licenseNumber">
+              {{ professional.name }} {{ professional.surname }} ${{ professional.price }}
+            </option>
+            <option *ngIf="selectedInsuranceType === 'with'" [value]="professional.licenseNumber">
+              {{ professional.name }} {{ professional.surname }}
+            </option>
+          </ng-container>
+        </select>
+        <label for="professional">Profesional</label>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-floating mb-3">
+        <input type="date" class="form-control" id="turnDate" [(ngModel)]="selectedDate" (change)="onDateSelected()"
+          min="{{ minDate | date:'yyyy-MM-dd' }}">
+        <label for="turnDate">Fecha del turno</label>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-floating mb-3">
+        <select class="form-select" id="hour" [(ngModel)]="selectedShiftId" placeholder="Elija un turno"
+          (change)="onHourSelected()">
+          <option value="" disabled selected>Elija uno</option>
+          <option *ngFor="let shift of availableShifts" [value]="shift.id">{{ shift.hourShift }}</option>
+        </select>
+        <label for="profesional">Hora del turno</label>
+      </div>
+    </div>
+    <div class="botonAceptar d-flex justify-content-center">
+      <button class="btn btn-success" [disabled]="!formValid" (click)="saveShift()">Confirmar Turno</button>
     </div>
   </div>
 </div>
