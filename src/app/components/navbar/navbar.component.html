@@ -7,17 +7,33 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/mis-turnos">Mis turnos</a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" routerLink="/nuevo-turno">Nuevo Turno</a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" routerLink="/editar-perfil">Editar Perfil</a>
-        </li>
+        <ng-container *ngIf="isAdmin; else userNav">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin-specialities">Especialidades</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin-healthInsurances">Obras Sociales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin-professionals">Profesionales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin-shifts">Turnos</a>
+          </li>
+        </ng-container>
+        <ng-template #userNav>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mis-turnos">Mis turnos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/nuevo-turno">Nuevo Turno</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/editar-perfil">Editar Perfil</a>
+          </li>
+        </ng-template>
       </ul>
-        <button class="btn btn-outline-success" routerLink="/log-out" type="button">LogOut</button>
+      <button class="btn btn-outline-success" routerLink="/log-out" type="button">LogOut</button>
     </div>
   </div>
 </nav>

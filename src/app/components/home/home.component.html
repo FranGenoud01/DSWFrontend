@@ -1,18 +1,23 @@
 <app-navbar></app-navbar>
 <div class="wrapper">
   <h2 class="welcome-message">Hola,  <span>{{ name }}</span>&nbsp;<span>{{ surname }}</span></h2>
-  <div *ngIf="nextShif" class="alert alert-info" role="alert">
-    <strong>Tu próximo turno es <br> 
-      Fecha: {{ nextShif.dateShift }} <br>
-      Hora: {{ nextShif.hourShift }}hs. <br> 
-      Dr/Dra: {{nextShif.doctorSurname}}, {{nextShif.doctorName}} <br>
-      Especialidad: {{nextShif.speciality}} <br>
-      <span *ngIf="nextShif.price > 0">Precio: ${{ nextShif.price }}</span>
-    </strong>
-  </div>
-  <div *ngIf="!nextShif" class="alert alert-info">
-    <strong>No tienes ninguna consulta agendada.<br>
-    No olvides que podes conseguir una en la sección Nuevo Turno</strong>
-  </div>
+  <ng-container *ngIf="isAdmin; else userNav">
+    
+  </ng-container>
+  <ng-template #userNav>
+    <div *ngIf="nextShif" class="alert alert-info" role="alert">
+      <strong>Tu próximo turno es <br>
+        Fecha: {{ nextShif.dateShift }} <br>
+        Hora: {{ nextShif.hourShift }}hs. <br>
+        Dr/Dra: {{nextShif.doctorSurname}}, {{nextShif.doctorName}} <br>
+        Especialidad: {{nextShif.speciality}} <br>
+        <span *ngIf="nextShif.price > 0">Precio: ${{ nextShif.price }}</span>
+      </strong>
+    </div>
+    <div *ngIf="!nextShif" class="alert alert-info">
+      <strong>No tienes ninguna consulta agendada.<br>
+        No olvides que podes conseguir una en la sección Nuevo Turno</strong>
+    </div>
+  </ng-template>
 </div>
 <app-footer></app-footer>

@@ -78,6 +78,7 @@ export class NuevoTurnoComponent implements OnInit {
   getSpecialities() {
     this.specialityService.getSpecialities().subscribe((response: any) => {
       this.specialities = response.data;
+      console.log(this.specialities);
     });
   }
 
@@ -94,6 +95,7 @@ export class NuevoTurnoComponent implements OnInit {
       .getHealthInsurances()
       .subscribe((response: any) => {
         this.healthInsurances = response.data;
+        console.log(this.healthInsurances);
       });
   }
 
@@ -104,19 +106,28 @@ export class NuevoTurnoComponent implements OnInit {
         .getProfessionalsBySpeciality(this.selectedSpeciality)
         .subscribe((response: any) => {
           this.professionals = response.data;
+          console.log(this.professionals);
         });
+      console.log(this.selectedSpeciality);
     } else {
       this.professionals = [];
     }
   }
 
   onHealthInsuranceSelected() {
+    console.log(this.selectedSpeciality, this.selectedHealthInsurance);
     this.checkFormValidity();
     if (this.selectedHealthInsurance) {
       this.profesionalService
-        .getProfessionalsByHealthInsurance(this.selectedHealthInsurance)
+        .getProfessionalsBySpecialityAndHealthInsurance(
+          this.selectedSpeciality,
+          this.selectedHealthInsurance
+        )
         .subscribe((response: any) => {
           this.professionals = response.data;
+          if (this.professionals.length == 0) {
+            this.toastr.info('No hay profesionales disponibles', 'Mensaje');
+          }
         });
     }
   }

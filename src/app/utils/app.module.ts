@@ -17,6 +17,13 @@ import { FooterComponent } from '../components/footer/footer.component';
 import { NuevoTurnoComponent } from '../components/nuevo-turno/nuevo-turno.component';
 import { LogoutComponent } from '../components/log-out/log-out.component';
 import { EditarPerfilComponent } from '../components/editar-perfil/editar-perfil.component';
+import { AdminEspecialidadesComponent } from '../components/admin-especialidades/admin-especialidades.component';
+import { AdminProfesionalesComponent } from '../components/admin-profesionales/admin-profesionales.component';
+import { AdminObrasSocialesComponent } from '../components/admin-obras-sociales/admin-obras-sociales.component';
+import { EditProfessionalsComponent } from '../components/edit-professionals/edit-professionals.component';
+import { AdminTurnosComponent } from '../components/admin-turnos/admin-turnos.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -30,6 +37,11 @@ import { EditarPerfilComponent } from '../components/editar-perfil/editar-perfil
     NuevoTurnoComponent,
     LogoutComponent,
     EditarPerfilComponent,
+    AdminEspecialidadesComponent,
+    AdminProfesionalesComponent,
+    AdminObrasSocialesComponent,
+    EditProfessionalsComponent,
+    AdminTurnosComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +50,8 @@ import { EditarPerfilComponent } from '../components/editar-perfil/editar-perfil
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    MatTableModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

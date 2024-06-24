@@ -14,11 +14,13 @@ export class HomeComponent implements OnInit {
   surname: string = '';
   document: string = '';
   nextShif: Shift | undefined;
-
+  public isAdmin: boolean = false;
   constructor(private shiftService: ShiftService) {}
 
   ngOnInit() {
     const currentUser = localStorage.getItem('currentUser');
+    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    this.isAdmin = user.role === 'admin';
     if (currentUser) {
       const user = JSON.parse(currentUser);
       this.name = user.name;

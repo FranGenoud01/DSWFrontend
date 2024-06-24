@@ -49,10 +49,11 @@ export class LoginComponent implements OnInit {
         const name = payload.name;
         const surname = payload.surname;
         const document = payload.DNI;
-        this._userService.setUser({ name, surname, document });
+        const role = payload.role;
+        this._userService.setUser({ name, surname, document, role });
         localStorage.setItem(
           'currentUser',
-          JSON.stringify({ name, surname, document })
+          JSON.stringify({ name, surname, document, role })
         );
         this.router.navigate(['/home']);
       },

@@ -1,0 +1,124 @@
+<app-navbar></app-navbar>
+<div class="wrapper">
+  <h2 class="welcome-message">Administra los Profesionales</h2>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col">
+        <form (ngSubmit)="addProfessional()">
+          <div class="row g-3">
+            <div class="col">
+              <div class="form-floating">
+                <input type="text" id="licenseNumber" class="form-control" [(ngModel)]="professional.licenseNumber"
+                  name="licenseNumber" required placeholder="Ingrese la Matrícula"
+                  [ngClass]="{ 'is-invalid': professional.licenseNumber && (!isNumeric(professional.licenseNumber) || !validateField(professional.licenseNumber, 1, 15)) }">
+                <label>Matrícula</label>
+                <div class="invalid-feedback">
+                  <span *ngIf="!isNumeric(professional.licenseNumber)">La matrícula debe ser numérica.</span>
+                  <span *ngIf="professional.licenseNumber && (professional.licenseNumber.length > 15)"> La matrícula debe tener entre 1 y 20 dígitos.</span>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating">
+                <input type="text" id="surname" class="form-control" [(ngModel)]="professional.surname" name="surname"
+                  required placeholder="Ingrese el apellido"
+                  [ngClass]="{ 'is-invalid': professional.surname && !validateField(professional.surname, 1, 20) }">
+                <label>Apellido</label>
+                <div class="invalid-feedback">El apellido no puede exceder los 20 caracteres.</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating">
+                <input type="text" id="name" class="form-control" [(ngModel)]="professional.name" name="name" required
+                  placeholder="Ingrese el nombre"
+                  [ngClass]="{ 'is-invalid': professional.name && !validateField(professional.name, 1, 20) }">
+                <label>Nombre</label>
+                <div class="invalid-feedback">El nombre no puede exceder los 20 caracteres.</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating">
+                <select id="speciality" class="form-select" [(ngModel)]="professional.speciality" name="speciality"
+                  required placeholder="Ingrese la especialidad">
+                  <option *ngFor="let speciality of specialities" [ngValue]="speciality.id">{{ speciality.description }}
+                  </option>
+                </select>
+                <label for="speciality">Especialidad</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating">
+                <input type="number" id="editPrice" class="form-control" [(ngModel)]="professional.price" name="editPrice" required
+                  placeholder="Ingrese el precio"
+                  [ngClass]="{ 'is-invalid': !isNumeric(professional.price) || professional.price < 0 }">
+                <label for="editPrice">Precio Consulta</label>
+                <div class="invalid-feedback">
+                  <span *ngIf="!isNumeric(professional.price)">El precio debe ser numérico.</span>
+                  <span *ngIf="professional.price < 0">El precio debe ser mayor a 0.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mt-3">
+            <div class="col-12">
+              <strong>Obras Sociales</strong>
+              <div class="form-floating mb-3 horizontal-checkboxes">
+                <div *ngFor="let healthInsurance of healthInsurances" class="form-check">
+                  <input class="form-check-input" type="checkbox" [id]="'healthInsurance' + healthInsurance.id"
+                    [value]="healthInsurance.id" (change)="onInsuranceChange($event)">
+                  <label class="form-check-label" [for]="'healthInsurance' + healthInsurance.id">
+                    {{ healthInsurance.description }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-success">Agregar Profesional</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col">
+        <div class="list-group">
+          <!-- Header -->
+          <div class="list-group-item list-group-item-primary">
+            <div class="row no-gutters">
+              <div class="col-1"><strong>Matrícula</strong></div>
+              <div class="col-2"><strong>Apellido</strong></div>
+              <div class="col-2"><strong>Nombre</strong></div>
+              <div class="col-2"><strong>Especialidad</strong></div>
+              <div class="col-1"><strong>Precio</strong></div>
+              <div class="col-2"><strong>Obras Sociales</strong></div>
+              <div class="col-1"><strong>Acciones</strong></div>
+            </div>
+          </div>
+          <!-- List Items -->
+          <div *ngFor="let professional of professionals" class="list-group-item">
+            <div class="row align-items-center no-gutters">
+              <div class="col-1">{{ professional.licenseNumber }}</div>
+              <div class="col-2">{{ professional.surname }}</div>
+              <div class="col-2">{{ professional.name }}</div>
+              <div class="col-2 text-truncate">{{ professional.speciality.description }}</div>
+              <div class="col-1">${{ professional.price }}</div>
+              <div class="col-2 text-truncate">
+                <ul>
+                  <li *ngFor="let currentInsurance of professional.healthInsurances">
+                    {{ currentInsurance.description }}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-1">
+                <button class="btn btn-sm btn-outline-primary" (click)="editProfessional(professional)">Editar</button>
+                <button class="btn btn-sm btn-outline-danger"
+                  (click)="deleteProfessional(professional)">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

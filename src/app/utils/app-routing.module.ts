@@ -8,6 +8,11 @@ import { MisTurnosComponent } from '../components/mis-turnos/mis-turnos.componen
 import { NuevoTurnoComponent } from '../components/nuevo-turno/nuevo-turno.component';
 import { LogoutComponent } from '../components/log-out/log-out.component';
 import { EditarPerfilComponent } from '../components/editar-perfil/editar-perfil.component';
+import { AdminEspecialidadesComponent } from '../components/admin-especialidades/admin-especialidades.component';
+import { AdminProfesionalesComponent } from '../components/admin-profesionales/admin-profesionales.component';
+import { AdminObrasSocialesComponent } from '../components/admin-obras-sociales/admin-obras-sociales.component';
+import { EditProfessionalsComponent } from '../components/edit-professionals/edit-professionals.component';
+import { AdminTurnosComponent } from '../components/admin-turnos/admin-turnos.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -18,6 +23,11 @@ const routes: Routes = [
   { path: 'mis-turnos', component: MisTurnosComponent },
   { path: 'nuevo-turno', component: NuevoTurnoComponent },
   { path: 'editar-perfil', component: EditarPerfilComponent },
+  { path: 'editar-profesional/:id', component: EditProfessionalsComponent },
+  { path: 'admin-specialities', component: AdminEspecialidadesComponent },
+  { path: 'admin-healthInsurances', component: AdminObrasSocialesComponent },
+  { path: 'admin-professionals', component: AdminProfesionalesComponent },
+  { path: 'admin-shifts', component: AdminTurnosComponent },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
 

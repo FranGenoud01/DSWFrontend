@@ -1,0 +1,17 @@
+
+.wrapper {
+  height: 78%;
+}
+
+.container {
+  max-width: fit-content;
+}
+
+.horizontal-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.horizontal-checkboxes .form-check {
+  margin-right: 15px;
+}
