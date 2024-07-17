@@ -8,6 +8,8 @@ import { ErrorService } from 'src/app/services/error.service';
 import { ShiftService } from 'src/app/services/shift.service';
 import { ProfessionalService } from 'src/app/services/professional.service.service';
 import { Professional } from 'src/app/interfaces/professional';
+import { SpecialityService } from 'src/app/services/speciality.service';
+import { Speciality } from 'src/app/interfaces/speciality';
 
 @Component({
   selector: 'app-admin-turnos',
@@ -16,10 +18,12 @@ import { Professional } from 'src/app/interfaces/professional';
 })
 export class AdminTurnosComponent implements OnInit {
   licenseNumber: string = '';
-  shifts: Shift[] = [];
+  shifts: any[] = [];
   professionals: Professional[] = [];
+  specialities: Speciality[] = [];
   displayedColumns: string[] = [
     'licenseProfessional',
+    'speciality',
     'dateShift',
     'hourShift',
     'status',
@@ -30,6 +34,7 @@ export class AdminTurnosComponent implements OnInit {
   filterCriteria = {
     status: '',
     licenseNumber: '',
+    speciality: '',
     futureDates: false,
     sortByPrice: '',
   };
@@ -40,7 +45,8 @@ export class AdminTurnosComponent implements OnInit {
     private shiftService: ShiftService,
     private toastr: ToastrService,
     private _errorService: ErrorService,
-    private professionalService: ProfessionalService
+    private professionalService: ProfessionalService,
+    private specialityService: SpecialityService
   ) {
     this.dataSource = new MatTableDataSource<Shift>([]);
   }
@@ -48,6 +54,7 @@ export class AdminTurnosComponent implements OnInit {
   ngOnInit(): void {
     this.getAllShifts();
     this.getAllProfessionals();
+    this.getAllSpecialities();
   }
 
   ngAfterViewInit() {
@@ -114,6 +121,18 @@ export class AdminTurnosComponent implements OnInit {
     );
   }
 
+  getAllSpecialities(): void {
+    this.specialityService.getSpecialities().subscribe(
+      (response: any) => {
+        console.log(response.data);
+        this.specialities = response.data;
+      },
+      (error: HttpErrorResponse) => {
+        this._errorService.msjError(error);
+      }
+    );
+  }
+
   applyFilters(): void {
     let filteredShifts = this.shifts;
 
@@ -125,7 +144,17 @@ export class AdminTurnosComponent implements OnInit {
 
     if (this.filterCriteria.licenseNumber) {
       filteredShifts = filteredShifts.filter((shift) =>
-        shift.licenseProfessional.includes(this.filterCriteria.licenseNumber)
+        shift.licenseProfessional.licenseNumber.includes(
+          this.filterCriteria.licenseNumber
+        )
+      );
+    }
+
+    if (this.filterCriteria.speciality) {
+      filteredShifts = filteredShifts.filter((shift) =>
+        shift.licenseProfessional.speciality.description.includes(
+          this.filterCriteria.speciality
+        )
       );
     }
 

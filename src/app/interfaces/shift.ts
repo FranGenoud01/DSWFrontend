@@ -1,3 +1,5 @@
+import { Speciality } from './speciality';
+
 export interface Shift {
   id: number;
   dateShift: string;
@@ -8,5 +10,5 @@ export interface Shift {
   licenseProfessional: string;
   doctorName: string;
   doctorSurname: string;
-  speciality: string;
+  speciality: Speciality;
 }

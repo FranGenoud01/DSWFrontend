@@ -1,36 +1,38 @@
 <app-navbar></app-navbar>
-<div class="wrapper">
-  <h2 class="welcome-message">Administra las Especialidades</h2>
-  <div class="row mb-4">
-    <div class="col">
-      <form (submit)="saveSpeciality()">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Nueva especialidad"
-            [(ngModel)]="speciality.description" name="description" required required style="margin-right: 5px;">
-          <button class="btn btn-primary" type="submit">Agregar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="list-group">
-        <!-- Header -->
-        <div class="list-group-item list-group-item-primary">
-          <div class="row">
-            <div class="col-1"><strong>ID</strong></div>
-            <div class="col-6"><strong>DESCRIPCIÓN</strong></div>
+<body>
+  <div class="wrapper">
+    <h2 class="welcome-message">Administra las Especialidades</h2>
+    <div class="row mb-4">
+      <div class="col">
+        <form (submit)="saveSpeciality()">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Nueva especialidad"
+              [(ngModel)]="speciality.description" name="description" required required style="margin-right: 5px;">
+            <button class="btn btn-primary" type="submit">Agregar</button>
           </div>
-        </div>
-        <!-- List Items -->
-        <div *ngFor="let speciality of specialities" class="list-group-item">
-          <div class="row align-items-center">
-            <div class="col-1">{{ speciality.id }}</div>
-            <div class="col-6">{{ speciality.description }}</div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="list-group">
+          <!-- Header -->
+          <div class="list-group-item list-group-item-primary">
+            <div class="row">
+              <div class="col-1"><strong>ID</strong></div>
+              <div class="col-6"><strong>DESCRIPCIÓN</strong></div>
+            </div>
+          </div>
+          <!-- List Items -->
+          <div *ngFor="let speciality of specialities" class="list-group-item">
+            <div class="row align-items-center">
+              <div class="col-1">{{ speciality.id }}</div>
+              <div class="col-6">{{ speciality.description }}</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</body>
 <app-footer></app-footer>
