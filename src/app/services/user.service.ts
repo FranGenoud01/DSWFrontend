@@ -38,7 +38,7 @@ export class UserService {
 
   login(user: User): Observable<string> {
     return this.http.post<string>(
-      `${this.myAppUrl}${this.authApiUrl}/login`,
+      `${this.myAppUrl}${this.authApiUrl}login`,
       user
     );
   }
